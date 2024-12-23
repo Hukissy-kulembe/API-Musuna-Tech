@@ -1,9 +1,8 @@
-package com.ao.musunatech.demoapp;
+package com.ao.musunatech.demoapp.models;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,8 +29,8 @@ public class Livro {
      @ManyToMany
      @JoinTable(
              name = "Autor_Livro",
-             joinColumns = @JoinColumn(name = "autorId"),
-             inverseJoinColumns = @JoinColumn(name = "livroId")
+             joinColumns = @JoinColumn(name = "autor_id"),
+             inverseJoinColumns = @JoinColumn(name = "livro_id")
      )
      private Set<Autor> autores = new HashSet<>();
 
@@ -39,23 +38,27 @@ public class Livro {
 
     }
 
-    public Livro(String urlLivro,
+    public Livro(Editora editora,
+                 Set<Autor> autores,
                  String capa,
-                 String idioma,
+                 String urlLivro,
                  String sinopse,
-                 int numeroDePagina,
+                 String idioma,
                  List<String> genero,
-                 String isbn,
+                 int numeroDePagina,
                  LocalDateTime anoDePublicacao,
+                 String isbn,
                  String titulo) {
-        this.urlLivro = urlLivro;
+        this.editora = editora;
+        this.autores = autores;
         this.capa = capa;
-        this.idioma = idioma;
+        this.urlLivro = urlLivro;
         this.sinopse = sinopse;
-        this.numeroDePagina = numeroDePagina;
+        this.idioma = idioma;
         this.genero = genero;
-        this.isbn = isbn;
+        this.numeroDePagina = numeroDePagina;
         this.anoDePublicacao = anoDePublicacao;
+        this.isbn = isbn;
         this.titulo = titulo;
     }
 

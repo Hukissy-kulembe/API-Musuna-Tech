@@ -1,4 +1,4 @@
-package com.ao.musunatech.demoapp;
+package com.ao.musunatech.demoapp.models;
 
 import jakarta.persistence.*;
 
@@ -23,11 +23,16 @@ public class Autor {
 
     }
 
-    public Autor(String autorNome, LocalDateTime dataDeNascimento, String nacionalidade, String biografia) {
+    public Autor(String autorNome,
+                 String biografia,
+                 Set<Livro> livros,
+                 LocalDateTime dataDeNascimento,
+                 String nacionalidade) {
         this.autorNome = autorNome;
+        this.biografia = biografia;
+        this.livros = livros;
         this.dataDeNascimento = dataDeNascimento;
         this.nacionalidade = nacionalidade;
-        this.biografia = biografia;
     }
 
     public Long getId() {

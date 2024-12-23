@@ -1,5 +1,6 @@
-package com.ao.musunatech.demoapp;
+package com.ao.musunatech.demoapp.repositories;
 
+import com.ao.musunatech.demoapp.models.Livro;
 import org.springframework.data.repository.Repository;
 
 import java.util.Optional;

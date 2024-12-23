@@ -1,14 +1,20 @@
 package com.ao.musunatech.demoapp;
 
+import com.ao.musunatech.demoapp.models.Autor;
+import com.ao.musunatech.demoapp.models.Editora;
+import com.ao.musunatech.demoapp.models.Livro;
+import com.ao.musunatech.demoapp.repositories.AutorRepository;
+import com.ao.musunatech.demoapp.repositories.EditoraRepository;
+import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Set;
 
 @SpringBootApplication
 public class DemoappApplication {
@@ -18,35 +24,128 @@ public class DemoappApplication {
     }
 
     @Bean
-    CommandLineRunner runner(LivroRepository livroRepository) {
+    CommandLineRunner runner(LivroRepository livroRepository, EditoraRepository editoraRepository, AutorRepository autorRepository) {
         return args -> {
-            Livro livro1 = new Livro("https://example.com/livro1", "capa1.jpg", "Português", "Sinopse do livro 1", 200, Arrays.asList("Ficção", "Aventura"), "978-3-16-148410-0", LocalDateTime.of(2020, 5, 15, 0, 0), "Livro 1");
-            Livro livro2 = new Livro("https://example.com/livro2", "capa2.jpg", "Inglês", "Sinopse do livro 2", 150, Arrays.asList("Romance", "Drama"), "978-3-16-148410-1", LocalDateTime.of(2021, 6, 20, 0, 0), "Livro 2");
-            Livro livro3 = new Livro("https://example.com/livro3", "capa3.jpg", "Espanhol", "Sinopse do livro 3", 300, Arrays.asList("Terror", "Suspense"), "978-3-16-148410-2", LocalDateTime.of(2019, 3, 10, 0, 0), "Livro 3");
-            Livro livro4 = new Livro("https://example.com/livro4", "capa4.jpg", "Francês", "Sinopse do livro 4", 400, Arrays.asList("Fantasia"), "978-3-16-148410-3", LocalDateTime.of(2022, 8, 25, 0, 0), "Livro 4");
-            Livro livro5 = new Livro("https://example.com/livro5", "capa5.jpg", "Português", "Sinopse do livro 5", 180, Arrays.asList("Biografia"), "978-3-16-148410-4", LocalDateTime.of(2018, 12, 5, 0, 0), "Livro 5");
-            Livro livro6 = new Livro("https://example.com/livro6", "capa6.jpg", "Inglês", "Sinopse do livro 6", 250, Arrays.asList("História"), "978-3-16-148410-5", LocalDateTime.of(2017, 7, 30, 0, 0), "Livro 6");
-            Livro livro7 = new Livro("https://example.com/livro7", "capa7.jpg", "Alemão", "Sinopse do livro 7", 320, Arrays.asList("Ciência"), "978-3-16-148410-6", LocalDateTime.of(2016, 11, 11, 0, 0), "Livro 7");
-            Livro livro8 = new Livro("https://example.com/livro8", "capa8.jpg", "Italiano", "Sinopse do livro 8", 275, Arrays.asList("Arte"), "978-3-16-148410-7", LocalDateTime.of(2015, 1, 20, 0, 0), "Livro 8");
-            Livro livro9 = new Livro("https://example.com/livro9", "capa9.jpg", "Português", "Sinopse do livro 9", 230, Arrays.asList("Poesia"), "978-3-16-148410-8", LocalDateTime.of(2023, 2, 14, 0, 0), "Livro 9");
-            Livro livro10 = new Livro("https://example.com/livro10", "capa10.jpg", "Chinês", "Sinopse do livro 10", 310, Arrays.asList("Negócios"), "978-3-16-148410-9", LocalDateTime.of(2021, 9, 17, 0, 0), "Livro 10");
+
+            Editora editora1 = new Editora(new HashSet<>(), "123456789", "Rua A, 123", "Editora Alpha");
+            Editora editora2 = new Editora(new HashSet<>(), "987654321", "Avenida B, 456", "Editora Beta");
+
+            Livro livro1 = new Livro(
+                    editora1,
+                    new HashSet<>(),
+                    "capa1.jpg",
+                    "https://url-livro1.com",
+                    "Sinopse do livro 1.",
+                    "Português",
+                    List.of("Ficção", "Aventura"),
+                    320,
+                    LocalDateTime.of(2020, 5, 15, 0, 0),
+                    "978-3-16-148410-0",
+                    "Título do Livro 1"
+            );
+
+            Livro livro2 = new Livro(
+                    editora2,
+                    new HashSet<>(),
+                    "capa2.jpg",
+                    "https://url-livro2.com",
+                    "Sinopse do livro 2.",
+                    "Inglês",
+                    List.of("Romance", "Drama"),
+                    250,
+                    LocalDateTime.of(2019, 8, 20, 0, 0),
+                    "978-1-23-456789-7",
+                    "Título do Livro 2"
+            );
+
+            Livro livro3 = new Livro(
+                    editora1,
+                    new HashSet<>(),
+                    "capa3.png",
+                    "https://url-livro3.com",
+                    "Sinopse do livro 3.",
+                    "Espanhol",
+                    List.of("Suspense", "Mistério"),
+                    400,
+                    LocalDateTime.of(2021, 3, 10, 0, 0),
+                    "978-0-12-345678-9",
+                    "Título do Livro 3"
+            );
+
+            Livro livro4 = new Livro(
+                    editora1,
+                    new HashSet<>(),
+                    "capa4.jpg",
+                    "https://url-livro4.com",
+                    "Sinopse do livro 4.",
+                    "Francês",
+                    List.of("Biografia"),
+                    180,
+                    LocalDateTime.of(2015, 7, 25, 0, 0),
+                    "978-3-14-159265-4",
+                    "Título do Livro 4"
+            );
+
+            Livro livro5 = new Livro(
+                    editora2,
+                    new HashSet<>(),
+                    "capa5.png",
+                    "https://url-livro5.com",
+                    "Sinopse do livro 5.",
+                    "Português",
+                    List.of("Ciência", "Tecnologia"),
+                    500,
+                    LocalDateTime.of(2018, 1, 1, 0, 0),
+                    "978-0-11-122334-5",
+                    "Título do Livro 5"
+            );
+
+            // Instâncias de autores
+            Autor autor1 = new Autor(
+                    "Autor 1",
+                    "Biografia do Autor 1",
+                    Set.of(livro1, livro2),
+                    LocalDateTime.of(1980, 6, 15, 0, 0),
+                    "Brasileiro"
+            );
+
+            Autor autor2 = new Autor(
+                    "Autor 2",
+                    "Biografia do Autor 2",
+                    Set.of(livro3),
+                    LocalDateTime.of(1975, 4, 10, 0, 0),
+                    "Argentino"
+            );
+
+            Autor autor3 = new Autor(
+                    "Autor 3",
+                    "Biografia do Autor 3",
+                    Set.of(livro4, livro5),
+                    LocalDateTime.of(1990, 11, 20, 0, 0),
+                    "Português"
+            );
+
+            editoraRepository.save(editora1);
+            editoraRepository.save(editora2);
+
+            autorRepository.save(autor1);
+            autorRepository.save(autor2);
+            autorRepository.save(autor3);
 
             livroRepository.save(livro1);
             livroRepository.save(livro2);
             livroRepository.save(livro3);
             livroRepository.save(livro4);
             livroRepository.save(livro5);
-            livroRepository.save(livro6);
-            livroRepository.save(livro7);
-            livroRepository.save(livro8);
-            livroRepository.save(livro9);
-            livroRepository.save(livro10);
 
+            /*
             Livro livro = livroRepository
                     .findById(livro1.getLivroId())
                     .orElseThrow(NoSuchElementException::new);
 
             System.out.println(livro.toString());
+
+             */
 
         };
     }

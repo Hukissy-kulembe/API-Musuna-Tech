@@ -1,4 +1,4 @@
-package com.ao.musunatech.demoapp;
+package com.ao.musunatech.demoapp.models;
 
 import jakarta.persistence.*;
 
@@ -17,10 +17,11 @@ public class Editora {
     @OneToMany(mappedBy = "editora")
     private Set<Livro> livro = new HashSet<>();
 
-    public Editora(String nifCnpj, String editoraNome, String endereco) {
+    public Editora(Set<Livro> livro, String nifCnpj, String endereco, String editoraNome) {
+        this.livro = livro;
         this.nifCnpj = nifCnpj;
-        this.editoraNome = editoraNome;
         this.endereco = endereco;
+        this.editoraNome = editoraNome;
     }
 
     public String getEditoraNome() {
