@@ -10,7 +10,7 @@ import java.util.Set;
 public class Autor {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long autorId;
+    private Long id;
     private String autorNome;
     private String nacionalidade;
     private LocalDateTime dataDeNascimento;
@@ -20,7 +20,7 @@ public class Autor {
     private Set<Livro> livros = new HashSet<>();
 
     public Autor(){
-
+        /* Construtor vazio*/
     }
 
     public Autor(String autorNome,
@@ -36,11 +36,11 @@ public class Autor {
     }
 
     public Long getId() {
-        return autorId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.autorId = id;
+        this.id = id;
     }
 
     public LocalDateTime getDataDeNascimento() {
@@ -73,14 +73,6 @@ public class Autor {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
-    }
-
-    public Long getAutorId() {
-        return autorId;
-    }
-
-    public void setAutorId(Long autorId) {
-        this.autorId = autorId;
     }
 
     public Set<Livro> getLivros() {

@@ -30,9 +30,35 @@ public class DemoappApplication {
             Editora editora1 = new Editora(new HashSet<>(), "123456789", "Rua A, 123", "Editora Alpha");
             Editora editora2 = new Editora(new HashSet<>(), "987654321", "Avenida B, 456", "Editora Beta");
 
+            // Instâncias de autores
+            Autor autor1 = new Autor(
+                    "Autor 1",
+                    "Biografia do Autor 1",
+                    new HashSet<>(),
+                    LocalDateTime.of(1980, 6, 15, 0, 0),
+                    "Brasileiro"
+            );
+
+            Autor autor2 = new Autor(
+                    "Autor 2",
+                    "Biografia do Autor 2",
+                    new HashSet<>(),
+                    LocalDateTime.of(1975, 4, 10, 0, 0),
+                    "Argentino"
+            );
+
+            Autor autor3 = new Autor(
+                    "Autor 3",
+                    "Biografia do Autor 3",
+                    new HashSet<>(),
+                    LocalDateTime.of(1990, 11, 20, 0, 0),
+                    "Português"
+            );
+
+
             Livro livro1 = new Livro(
                     editora1,
-                    new HashSet<>(),
+                    Set.of(autor1, autor2),
                     "capa1.jpg",
                     "https://url-livro1.com",
                     "Sinopse do livro 1.",
@@ -46,7 +72,7 @@ public class DemoappApplication {
 
             Livro livro2 = new Livro(
                     editora2,
-                    new HashSet<>(),
+                    Set.of(autor1, autor2, autor3),
                     "capa2.jpg",
                     "https://url-livro2.com",
                     "Sinopse do livro 2.",
@@ -60,7 +86,7 @@ public class DemoappApplication {
 
             Livro livro3 = new Livro(
                     editora1,
-                    new HashSet<>(),
+                    Set.of(autor1),
                     "capa3.png",
                     "https://url-livro3.com",
                     "Sinopse do livro 3.",
@@ -74,7 +100,7 @@ public class DemoappApplication {
 
             Livro livro4 = new Livro(
                     editora1,
-                    new HashSet<>(),
+                    Set.of(autor1, autor3),
                     "capa4.jpg",
                     "https://url-livro4.com",
                     "Sinopse do livro 4.",
@@ -88,7 +114,7 @@ public class DemoappApplication {
 
             Livro livro5 = new Livro(
                     editora2,
-                    new HashSet<>(),
+                    Set.of(autor1, autor2),
                     "capa5.png",
                     "https://url-livro5.com",
                     "Sinopse do livro 5.",
@@ -98,31 +124,6 @@ public class DemoappApplication {
                     LocalDateTime.of(2018, 1, 1, 0, 0),
                     "978-0-11-122334-5",
                     "Título do Livro 5"
-            );
-
-            // Instâncias de autores
-            Autor autor1 = new Autor(
-                    "Autor 1",
-                    "Biografia do Autor 1",
-                    Set.of(livro1, livro2),
-                    LocalDateTime.of(1980, 6, 15, 0, 0),
-                    "Brasileiro"
-            );
-
-            Autor autor2 = new Autor(
-                    "Autor 2",
-                    "Biografia do Autor 2",
-                    Set.of(livro3),
-                    LocalDateTime.of(1975, 4, 10, 0, 0),
-                    "Argentino"
-            );
-
-            Autor autor3 = new Autor(
-                    "Autor 3",
-                    "Biografia do Autor 3",
-                    Set.of(livro4, livro5),
-                    LocalDateTime.of(1990, 11, 20, 0, 0),
-                    "Português"
             );
 
             editoraRepository.save(editora1);
@@ -137,15 +138,6 @@ public class DemoappApplication {
             livroRepository.save(livro3);
             livroRepository.save(livro4);
             livroRepository.save(livro5);
-
-            /*
-            Livro livro = livroRepository
-                    .findById(livro1.getLivroId())
-                    .orElseThrow(NoSuchElementException::new);
-
-            System.out.println(livro.toString());
-
-             */
 
         };
     }

@@ -11,7 +11,7 @@ import java.util.Set;
 public class Livro {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long livroId;
+    private Long id;
     private String titulo;
     private String isbn;
     private LocalDateTime anoDePublicacao;
@@ -29,8 +29,8 @@ public class Livro {
      @ManyToMany
      @JoinTable(
              name = "Autor_Livro",
-             joinColumns = @JoinColumn(name = "autor_id"),
-             inverseJoinColumns = @JoinColumn(name = "livro_id")
+             joinColumns = @JoinColumn(name = "livro_id"),
+             inverseJoinColumns = @JoinColumn(name = "autor_id")
      )
      private Set<Autor> autores = new HashSet<>();
 
@@ -62,12 +62,12 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public Long getLivroId() {
-        return livroId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLivroId(Long livroId) {
-        this.livroId = livroId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getIsbn() {
@@ -161,7 +161,7 @@ public class Livro {
     @Override
     public String toString() {
         return "Livro{" +
-                "livroId=" + livroId +
+                "livroId=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", anoDePublicacao=" + anoDePublicacao +

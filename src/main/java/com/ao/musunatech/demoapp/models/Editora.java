@@ -9,7 +9,7 @@ import java.util.Set;
 public class Editora {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long editoraId;
+    private Long id;
     private String editoraNome;
     private String nifCnpj;
     private String endereco;
@@ -17,7 +17,14 @@ public class Editora {
     @OneToMany(mappedBy = "editora")
     private Set<Livro> livro = new HashSet<>();
 
-    public Editora(Set<Livro> livro, String nifCnpj, String endereco, String editoraNome) {
+    public Editora() {
+        /* Construtor vazio */
+    }
+
+    public Editora(Set<Livro> livro,
+                   String nifCnpj,
+                   String endereco,
+                   String editoraNome) {
         this.livro = livro;
         this.nifCnpj = nifCnpj;
         this.endereco = endereco;
@@ -48,12 +55,12 @@ public class Editora {
         this.endereco = endereco;
     }
 
-    public Long getEditoraId() {
-        return editoraId;
+    public Long getId() {
+        return id;
     }
 
-    public void setEditoraId(Long editoraId) {
-        this.editoraId = editoraId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Set<Livro> getLivro() {
