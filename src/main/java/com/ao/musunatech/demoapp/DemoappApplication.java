@@ -1,11 +1,11 @@
 package com.ao.musunatech.demoapp;
 
+import com.ao.musunatech.demoapp.implementacao.AutorImplementacao;
+import com.ao.musunatech.demoapp.implementacao.EditoraImplementacao;
+import com.ao.musunatech.demoapp.implementacao.LivroImplementacao;
 import com.ao.musunatech.demoapp.models.Autor;
 import com.ao.musunatech.demoapp.models.Editora;
 import com.ao.musunatech.demoapp.models.Livro;
-import com.ao.musunatech.demoapp.repositories.AutorRepository;
-import com.ao.musunatech.demoapp.repositories.EditoraRepository;
-import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +24,9 @@ public class DemoappApplication {
     }
 
     @Bean
-    CommandLineRunner runner(LivroRepository livroRepository, EditoraRepository editoraRepository, AutorRepository autorRepository) {
+    CommandLineRunner runner(LivroImplementacao livroImplementacao,
+                             AutorImplementacao autorImplementacao,
+                             EditoraImplementacao editoraImplementacao) {
         return args -> {
 
             Editora editora1 = new Editora(new HashSet<>(), "123456789", "Rua A, 123", "Editora Alpha");
@@ -126,19 +128,25 @@ public class DemoappApplication {
                     "Título do Livro 5"
             );
 
-            editoraRepository.save(editora1);
-            editoraRepository.save(editora2);
+            editoraImplementacao.cadastrarEditora(editora1);
+            editoraImplementacao.cadastrarEditora(editora2);
 
-            autorRepository.save(autor1);
-            autorRepository.save(autor2);
-            autorRepository.save(autor3);
 
-            livroRepository.save(livro1);
-            livroRepository.save(livro2);
-            livroRepository.save(livro3);
-            livroRepository.save(livro4);
-            livroRepository.save(livro5);
+            autorImplementacao.cadastrarAutor(autor1);
+            autorImplementacao.cadastrarAutor(autor2);
+            autorImplementacao.cadastrarAutor(autor3);
 
+            livroImplementacao.cadastrarLivro(livro1);
+            livroImplementacao.cadastrarLivro(livro2);
+            livroImplementacao.cadastrarLivro(livro3);
+            livroImplementacao.cadastrarLivro(livro4);
+            livroImplementacao.cadastrarLivro(livro5);
+
+            var a = livroImplementacao.buscarPorId(2l);
+
+            System.out.println(a);
+
+            livroImplementacao.deletarPorId(a.getId());
         };
     }
 }

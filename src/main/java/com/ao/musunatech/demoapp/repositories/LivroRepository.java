@@ -1,13 +1,8 @@
 package com.ao.musunatech.demoapp.repositories;
 
 import com.ao.musunatech.demoapp.models.Livro;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface LivroRepository extends Repository<Livro, Long> {
-
-    Livro save(Livro livro);
-    Optional<Livro> findById(Long id);
+public interface LivroRepository extends JpaRepository<Livro, Long> {
 
 }
