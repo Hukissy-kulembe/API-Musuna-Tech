@@ -11,52 +11,60 @@ import java.util.Set;
 @Entity
 public class Livro {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String titulo;
     private String isbn;
     private LocalDate anoDePublicacao;
-    private List<String> genero;
     private int numeroDePagina;
     private String idioma;
     private String sinopse;
     private String capa;
     private String urlLivro;
 
-     @ManyToOne
-     @JoinColumn(name = "editoraId")
-     private Editora editora;
+    @ManyToOne
+    @JoinColumn(name = "editoraId")
+    private Editora editora;
 
-     @ManyToMany
-     @JoinTable(
-             name = "Autor_Livro",
-             joinColumns = @JoinColumn(name = "livro_id"),
-             inverseJoinColumns = @JoinColumn(name = "autor_id")
-     )
-     private Set<Autor> autores = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "Autor_Livro",
+            joinColumns = @JoinColumn(name = "livro_id"),
+            inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
+    private Set<Autor> autores = new HashSet<>();
 
-    public Livro(){
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "livro_genero",
+            joinColumns = @JoinColumn(name = "livro_id"),
+            inverseJoinColumns = @JoinColumn(name = "genero_id")
+    )
+    private Set<Genero> generos = new HashSet<>();
 
+    public Livro() {
+        /* Construtor vazio */
     }
 
     public Livro(Editora editora,
                  Set<Autor> autores,
+                 Set<Genero> generos,
                  String capa,
                  String urlLivro,
                  String sinopse,
                  String idioma,
-                 List<String> genero,
                  int numeroDePagina,
                  LocalDate anoDePublicacao,
                  String isbn,
                  String titulo) {
         this.editora = editora;
         this.autores = autores;
+        this.generos = generos;
         this.capa = capa;
         this.urlLivro = urlLivro;
         this.sinopse = sinopse;
         this.idioma = idioma;
-        this.genero = genero;
         this.numeroDePagina = numeroDePagina;
         this.anoDePublicacao = anoDePublicacao;
         this.isbn = isbn;
@@ -95,12 +103,12 @@ public class Livro {
         this.anoDePublicacao = anoDePublicacao;
     }
 
-    public List<String> getGenero() {
-        return genero;
+    public Set<Genero> getGeneros() {
+        return generos;
     }
 
-    public void setGenero(List<String> genero) {
-        this.genero = genero;
+    public void setGeneros(Set<Genero> generos) {
+        this.generos = generos;
     }
 
     public int getNumeroDePagina() {
@@ -166,7 +174,7 @@ public class Livro {
                 ", titulo='" + titulo + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", anoDePublicacao=" + anoDePublicacao +
-                ", genero=" + genero +
+                ", generos=" + generos +
                 ", numeroDePagina=" + numeroDePagina +
                 ", idioma='" + idioma + '\'' +
                 ", sinopse='" + sinopse + '\'' +
