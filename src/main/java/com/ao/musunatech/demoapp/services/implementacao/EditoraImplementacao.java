@@ -1,5 +1,6 @@
-package com.ao.musunatech.demoapp.implementacao;
+package com.ao.musunatech.demoapp.services.implementacao;
 
+import com.ao.musunatech.demoapp.dtos.output.EditoraDtoOutput;
 import com.ao.musunatech.demoapp.models.Editora;
 import com.ao.musunatech.demoapp.repositories.EditoraRepository;
 import com.ao.musunatech.demoapp.services.EditoraService;
@@ -14,15 +15,28 @@ public class EditoraImplementacao implements EditoraService {
     private EditoraRepository editoraRepository;
 
     @Override
-    public Editora cadastrarEditora(Editora editora) {
-        return editoraRepository.save(editora);
+    public EditoraDtoOutput cadastrarEditora(Editora editora) {
+         var a = editoraRepository.save(editora);
+         EditoraDtoOutput editoraDtoOutput = new EditoraDtoOutput(
+                 a.getNifCnpj(),
+                 a.getEndereco(),
+                 a.getEditoraNome()
+         );
+        return editoraDtoOutput;
     }
 
     @Override
-    public Editora buscarPorId(Long id) {
-        return editoraRepository
+    public EditoraDtoOutput buscarPorId(Long id) {
+        var editora = editoraRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Editora não encontrada para o id: " + id));
+
+        EditoraDtoOutput editoraDto = new EditoraDtoOutput(
+          editora.getNifCnpj(),
+          editora.getEndereco(),
+          editora.getEditoraNome()
+        );
+        return editoraDto;
     }
 
     @Override

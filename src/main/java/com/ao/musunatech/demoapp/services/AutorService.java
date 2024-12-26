@@ -1,11 +1,12 @@
 package com.ao.musunatech.demoapp.services;
 
+import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.models.Autor;
 
 public interface AutorService {
 
-    Autor cadastrarAutor(Autor autor);
-    Autor buscarPorId(Long id);
+    AutorDtoOutput cadastrarAutor(Autor autor);
+    AutorDtoOutput buscarPorId(Long id);
     void deletarPorId(Long id);
 
 }

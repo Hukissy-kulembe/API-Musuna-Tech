@@ -1,8 +1,8 @@
 package com.ao.musunatech.demoapp;
 
-import com.ao.musunatech.demoapp.implementacao.AutorImplementacao;
-import com.ao.musunatech.demoapp.implementacao.EditoraImplementacao;
-import com.ao.musunatech.demoapp.implementacao.LivroImplementacao;
+import com.ao.musunatech.demoapp.services.implementacao.AutorImplementacao;
+import com.ao.musunatech.demoapp.services.implementacao.EditoraImplementacao;
+import com.ao.musunatech.demoapp.services.implementacao.LivroImplementacao;
 import com.ao.musunatech.demoapp.models.Autor;
 import com.ao.musunatech.demoapp.models.Editora;
 import com.ao.musunatech.demoapp.models.Livro;
@@ -11,7 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +37,7 @@ public class DemoappApplication {
                     "Autor 1",
                     "Biografia do Autor 1",
                     new HashSet<>(),
-                    LocalDateTime.of(1980, 6, 15, 0, 0),
+                    LocalDate.of(1980, 6, 15),
                     "Brasileiro"
             );
 
@@ -45,7 +45,7 @@ public class DemoappApplication {
                     "Autor 2",
                     "Biografia do Autor 2",
                     new HashSet<>(),
-                    LocalDateTime.of(1975, 4, 10, 0, 0),
+                    LocalDate.of(1975, 4, 10),
                     "Argentino"
             );
 
@@ -53,7 +53,7 @@ public class DemoappApplication {
                     "Autor 3",
                     "Biografia do Autor 3",
                     new HashSet<>(),
-                    LocalDateTime.of(1990, 11, 20, 0, 0),
+                    LocalDate.of(1990, 11, 20),
                     "Português"
             );
 
@@ -67,7 +67,7 @@ public class DemoappApplication {
                     "Português",
                     List.of("Ficção", "Aventura"),
                     320,
-                    LocalDateTime.of(2020, 5, 15, 0, 0),
+                    LocalDate.of(2020, 5, 15),
                     "978-3-16-148410-0",
                     "Título do Livro 1"
             );
@@ -81,7 +81,7 @@ public class DemoappApplication {
                     "Inglês",
                     List.of("Romance", "Drama"),
                     250,
-                    LocalDateTime.of(2019, 8, 20, 0, 0),
+                    LocalDate.of(2019, 8, 20),
                     "978-1-23-456789-7",
                     "Título do Livro 2"
             );
@@ -95,7 +95,7 @@ public class DemoappApplication {
                     "Espanhol",
                     List.of("Suspense", "Mistério"),
                     400,
-                    LocalDateTime.of(2021, 3, 10, 0, 0),
+                    LocalDate.of(2021, 3, 10),
                     "978-0-12-345678-9",
                     "Título do Livro 3"
             );
@@ -109,7 +109,7 @@ public class DemoappApplication {
                     "Francês",
                     List.of("Biografia"),
                     180,
-                    LocalDateTime.of(2015, 7, 25, 0, 0),
+                    LocalDate.of(2015, 7, 25),
                     "978-3-14-159265-4",
                     "Título do Livro 4"
             );
@@ -123,7 +123,7 @@ public class DemoappApplication {
                     "Português",
                     List.of("Ciência", "Tecnologia"),
                     500,
-                    LocalDateTime.of(2018, 1, 1, 0, 0),
+                    LocalDate.of(2018, 1, 1),
                     "978-0-11-122334-5",
                     "Título do Livro 5"
             );
@@ -143,10 +143,12 @@ public class DemoappApplication {
             livroImplementacao.cadastrarLivro(livro5);
 
             var a = livroImplementacao.buscarPorId(2l);
-
             System.out.println(a);
 
-            livroImplementacao.deletarPorId(a.getId());
+            var ba = autorImplementacao.buscarPorId(autor2.getId());
+            System.out.println(ba);
+
+            livroImplementacao.deletarPorId(a.id());
         };
     }
 }

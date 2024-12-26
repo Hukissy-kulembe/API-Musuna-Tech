@@ -2,6 +2,7 @@ package com.ao.musunatech.demoapp.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class Autor {
     private Long id;
     private String autorNome;
     private String nacionalidade;
-    private LocalDateTime dataDeNascimento;
+    private LocalDate dataDeNascimento;
     private String biografia;
 
     @ManyToMany(mappedBy = "autores")
@@ -26,7 +27,7 @@ public class Autor {
     public Autor(String autorNome,
                  String biografia,
                  Set<Livro> livros,
-                 LocalDateTime dataDeNascimento,
+                 LocalDate dataDeNascimento,
                  String nacionalidade) {
         this.autorNome = autorNome;
         this.biografia = biografia;
@@ -43,11 +44,11 @@ public class Autor {
         this.id = id;
     }
 
-    public LocalDateTime getDataDeNascimento() {
+    public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
     }
 
-    public void setDataDeNascimento(LocalDateTime dataDeNascimento) {
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
         this.dataDeNascimento = dataDeNascimento;
     }
 

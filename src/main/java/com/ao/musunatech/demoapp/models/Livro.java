@@ -2,6 +2,7 @@ package com.ao.musunatech.demoapp.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,7 @@ public class Livro {
     private Long id;
     private String titulo;
     private String isbn;
-    private LocalDateTime anoDePublicacao;
+    private LocalDate anoDePublicacao;
     private List<String> genero;
     private int numeroDePagina;
     private String idioma;
@@ -46,7 +47,7 @@ public class Livro {
                  String idioma,
                  List<String> genero,
                  int numeroDePagina,
-                 LocalDateTime anoDePublicacao,
+                 LocalDate anoDePublicacao,
                  String isbn,
                  String titulo) {
         this.editora = editora;
@@ -86,11 +87,11 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public LocalDateTime getAnoDePublicacao() {
+    public LocalDate getAnoDePublicacao() {
         return anoDePublicacao;
     }
 
-    public void setAnoDePublicacao(LocalDateTime anoDePublicacao) {
+    public void setAnoDePublicacao(LocalDate anoDePublicacao) {
         this.anoDePublicacao = anoDePublicacao;
     }
 
