@@ -10,17 +10,24 @@ import java.util.Set;
 @Entity
 public class Autor {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
     private String autorNome;
+    @Column(nullable = false)
     private String nacionalidade;
+    @Column(nullable = false)
     private LocalDate dataDeNascimento;
+
+    @Column(unique = true, nullable = false)
     private String biografia;
 
     @ManyToMany(mappedBy = "autores")
     private Set<Livro> livros = new HashSet<>();
 
-    public Autor(){
+    public Autor() {
         /* Construtor vazio*/
     }
 

@@ -6,12 +6,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(
+        name = "EDITORA",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {
+                                "nifCnpj", "editoraNome"
+                        }
+                )
+        }
+)
 public class Editora {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
     private String editoraNome;
+    @Column(nullable = false)
     private String nifCnpj;
+
     private String endereco;
 
     @OneToMany(mappedBy = "editora")

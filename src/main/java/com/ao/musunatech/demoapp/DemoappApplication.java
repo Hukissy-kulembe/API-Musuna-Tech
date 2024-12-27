@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
@@ -38,6 +37,7 @@ public class DemoappApplication {
             Genero genero3 = new Genero("Fantasia", "Histórias com elementos mágicos ou sobrenaturais.", LocalDateTime.now(), LocalDateTime.now());
             Genero genero4 = new Genero("Mistério", "Histórias envolvendo investigações ou enigmas.", LocalDateTime.now(), LocalDateTime.now());
             Genero genero5 = new Genero("Terror", "Histórias destinadas a assustar ou causar medo.", LocalDateTime.now(), LocalDateTime.now());
+            Genero genero6 = new Genero("Drama", "Obras focadas em conflitos emocionais e dilemas profundos.", LocalDateTime.now(), LocalDateTime.now());
 
             Editora editora1 = new Editora(new HashSet<>(), "123456789", "Rua A, 123", "Editora Alpha");
             Editora editora2 = new Editora(new HashSet<>(), "987654321", "Avenida B, 456", "Editora Beta");
@@ -146,6 +146,7 @@ public class DemoappApplication {
             generoImplementacao.cadastrarGenero(genero3);
             generoImplementacao.cadastrarGenero(genero4);
             generoImplementacao.cadastrarGenero(genero5);
+            generoImplementacao.cadastrarGenero(genero6);
 
             autorImplementacao.cadastrarAutor(autor1);
             autorImplementacao.cadastrarAutor(autor2);

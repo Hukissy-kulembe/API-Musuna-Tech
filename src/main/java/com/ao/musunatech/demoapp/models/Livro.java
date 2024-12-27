@@ -3,24 +3,45 @@ package com.ao.musunatech.demoapp.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(
+        name = "LIVRO",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "capa"),
+                @UniqueConstraint(columnNames = "urlLivro"),
+                @UniqueConstraint(columnNames = "isbn")
+        }
+)
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
     private String titulo;
+
+    @Column(unique = true, nullable = false)
     private String isbn;
+
+    @Column(nullable = false, columnDefinition = "DATE")
     private LocalDate anoDePublicacao;
+
+    @Column(nullable = false)
     private int numeroDePagina;
+
+    @Column(nullable = false)
     private String idioma;
+
     private String sinopse;
+
+    @Column(unique = true ,nullable = false)
     private String capa;
+
+    @Column(unique = true, nullable = false)
     private String urlLivro;
 
     @ManyToOne
