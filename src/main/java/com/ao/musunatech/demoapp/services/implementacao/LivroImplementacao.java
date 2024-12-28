@@ -8,6 +8,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class LivroImplementacao implements LivroService {
 
@@ -56,6 +58,18 @@ public class LivroImplementacao implements LivroService {
     @Override
     public void deletarPorId(Long id) {
         livroRepository.deleteById(id);
+    }
+
+    @Override
+    public Stream<Livro> buscarPorIsbn(String isbn) {
+        return livroRepository.findAll()
+                .stream()
+                .filter(value -> value.getIsbn() == isbn);
+    }
+
+    @Override
+    public LivroDtoOutput buscarPorTitulo(String titulo) {
+        return null;
     }
 
 }
