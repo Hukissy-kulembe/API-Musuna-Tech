@@ -17,14 +17,23 @@ import java.util.Optional;
 @Service
 public class GeneroImplementacao implements GeneroService {
 
-    @Autowired
     private GeneroRepository generoRepository;
-    @Autowired
     private LivroRepository livroRepository;
 
+    public GeneroImplementacao(GeneroRepository generoRepository, LivroRepository livroRepository){
+        this.generoRepository = generoRepository;
+        this.livroRepository = livroRepository;
+    }
+
     @Override
-    public GeneroDtoOutput cadastrarGenero(Genero genero) {
+    public GeneroDtoOutput cadastrar(GeneroDtoInput generoDtoInput) {
+        Genero genero = new Genero();
+
+        genero.setGeneroNome(generoDtoInput.generoNome());
+        genero.setDescricao(generoDtoInput.descricao());
+
         var a = generoRepository.save(genero);
+
         GeneroDtoOutput generoDtoOutput = new GeneroDtoOutput(
                 a.getId(),
                 a.getGeneroNome(),
@@ -74,14 +83,13 @@ public class GeneroImplementacao implements GeneroService {
     }
 
     @Override
-    public GeneroDtoOutput atualizarGenero(Long id, GeneroDtoInput generoDtoInput) {
+    public GeneroDtoOutput atualizar(Long id, GeneroDtoInput generoDtoInput) {
         Genero genero = generoRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Genero não encontrado com ID: " + id));
 
         genero.setGeneroNome(generoDtoInput.generoNome());
         genero.setDescricao(generoDtoInput.descricao());
-        genero.setAtualizadoEm(LocalDateTime.now());
 
         var a = generoRepository.save(genero);
 

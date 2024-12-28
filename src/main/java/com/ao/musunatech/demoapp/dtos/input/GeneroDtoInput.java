@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 public record GeneroDtoInput(
         String generoNome,
-        String descricao,
-        LocalDateTime criadoEm,
-        LocalDateTime atualizadoEm
+        String descricao
 ) implements Serializable {
 }

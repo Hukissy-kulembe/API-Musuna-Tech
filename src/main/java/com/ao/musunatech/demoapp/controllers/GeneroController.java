@@ -2,7 +2,6 @@ package com.ao.musunatech.demoapp.controllers;
 
 import com.ao.musunatech.demoapp.dtos.input.GeneroDtoInput;
 import com.ao.musunatech.demoapp.dtos.output.GeneroDtoOutput;
-import com.ao.musunatech.demoapp.models.Genero;
 import com.ao.musunatech.demoapp.services.GeneroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,12 @@ public class GeneroController {
         this.generoService = generoService;
     }
 
-    @GetMapping("/id/{id}")
+    /**
+     * Get: getGeneroById(Long id) ->
+     * pega um determinado Gênero pelo campo ID
+     * */
+
+    @GetMapping("/{id}")
     public ResponseEntity<GeneroDtoOutput> getGeneroById(@PathVariable Long id) {
         GeneroDtoOutput generoDtoOutput = generoService.buscarPorId(id);
         return new ResponseEntity<>(generoDtoOutput, HttpStatus.OK);
@@ -32,7 +36,7 @@ public class GeneroController {
         return new ResponseEntity<>(generoDtoOutput, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<GeneroDtoOutput>> getAll(){
         var list = generoService.buscarTodos();
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -40,29 +44,29 @@ public class GeneroController {
 
     @PostMapping
     public ResponseEntity<GeneroDtoOutput> salvarGenero(@RequestBody GeneroDtoInput generoDtoInput) {
-        GeneroDtoOutput generoDtoOutput = generoService.cadastrarGenero(new Genero(
-                generoDtoInput.generoNome(),
-                generoDtoInput.descricao(),
-                generoDtoInput.criadoEm(),
-                generoDtoInput.atualizadoEm()
-        ));
-        return new ResponseEntity<>(generoDtoOutput, HttpStatus.OK);
+        GeneroDtoOutput generoDtoOutput = generoService.cadastrar(generoDtoInput);
+        return new ResponseEntity<>(generoDtoOutput, HttpStatus.CREATED);
     }
 
-    @PutMapping("/atualizar/{id}")
+    /**
+     * Put: atualizarGenero(Long id, GeneroDtoInput) ->
+     * este método serve para atualizar o Gênero
+     * no nosso banco de dados; apenas podem ser atualizados os campos:
+     *      generoNome, descricao e atualizarEm
+     * */
+
+    @PutMapping("/{id}")
     public ResponseEntity<GeneroDtoOutput> atualizarGenero(@PathVariable Long id, @RequestBody GeneroDtoInput generoDtoInput){
-        var genero = generoService.atualizarGenero(id, generoDtoInput);
-        GeneroDtoOutput generoDtoOutput = new GeneroDtoOutput(
-                genero.id(),
-                genero.generoNome(),
-                genero.descricao(),
-                genero.criadoEm(),
-                genero.atualizadoEm()
-        );
-        return new ResponseEntity<>(generoDtoOutput, HttpStatus.OK);
+        var genero = generoService.atualizar(id, generoDtoInput);
+        return new ResponseEntity<>(genero, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    /**
+     * Delete: deletarGeneroPorId(Long id) ->
+     *  deleta o Gênero pelo campo ID
+     * */
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarGeneroPorId(@PathVariable Long id){
         generoService.deletarPorId(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
