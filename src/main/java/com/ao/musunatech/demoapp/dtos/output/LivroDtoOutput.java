@@ -12,7 +12,6 @@ public record LivroDtoOutput(
         String titulo,
         LocalDate anoDePublicacao,
         String isbn,
-        Set<Genero> genero,
         int numeroDePagina,
         String idioma,
         String sinopse,

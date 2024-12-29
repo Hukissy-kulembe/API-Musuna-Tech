@@ -17,13 +17,8 @@ import java.util.Optional;
 @Service
 public class GeneroImplementacao implements GeneroService {
 
+    @Autowired
     private GeneroRepository generoRepository;
-    private LivroRepository livroRepository;
-
-    public GeneroImplementacao(GeneroRepository generoRepository, LivroRepository livroRepository){
-        this.generoRepository = generoRepository;
-        this.livroRepository = livroRepository;
-    }
 
     @Override
     public GeneroDtoOutput cadastrar(GeneroDtoInput generoDtoInput) {
