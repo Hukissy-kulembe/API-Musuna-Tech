@@ -64,7 +64,7 @@ public class Livro {
     )
     private Set<Genero> generos = new HashSet<>();
 
-    public Livro() {
+    public Livro(Editora editora, Set<Autor> autores, Set<Genero> generos, String capa, String s, String idioma, int i, LocalDate localDate, String isbn, String titulo) {
         /* Construtor vazio */
     }
 

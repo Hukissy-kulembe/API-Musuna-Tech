@@ -35,11 +35,10 @@ public class Editora {
         /* Construtor vazio */
     }
 
-    public Editora(Set<Livro> livro,
+    public Editora(
                    String nifCnpj,
                    String endereco,
                    String editoraNome) {
-        this.livro = livro;
         this.nifCnpj = nifCnpj;
         this.endereco = endereco;
         this.editoraNome = editoraNome;

@@ -33,7 +33,6 @@ public class Autor {
 
     public Autor(String autorNome,
                  String biografia,
-                 Set<Livro> livros,
                  LocalDate dataDeNascimento,
                  String nacionalidade) {
         this.autorNome = autorNome;

@@ -1,23 +1,36 @@
 package com.ao.musunatech.demoapp.services.implementacao;
 
 import com.ao.musunatech.demoapp.dtos.input.LivroDtoInput;
+import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.dtos.output.LivroDtoOutput;
+import com.ao.musunatech.demoapp.models.Autor;
 import com.ao.musunatech.demoapp.models.Livro;
+import com.ao.musunatech.demoapp.repositories.AutorRepository;
+import com.ao.musunatech.demoapp.repositories.GeneroRepository;
 import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import com.ao.musunatech.demoapp.services.LivroService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class LivroImplementacao implements LivroService {
 
-    @Autowired
     private LivroRepository livroRepository;
+    private AutorRepository autorRepository;
+    private GeneroRepository generoRepository;
+
+    public LivroImplementacao(LivroRepository livroRepository, AutorRepository autorRepository, GeneroRepository generoRepository) {
+        this.livroRepository = livroRepository;
+        this.autorRepository = autorRepository;
+        this.generoRepository = generoRepository;
+    }
 
     @Override
     public LivroDtoOutput cadastrar(LivroDtoInput livroDtoInput) {
@@ -27,7 +40,6 @@ public class LivroImplementacao implements LivroService {
                 livroDtoInput.generos(),
                 livroDtoInput.capa(),
                 livroDtoInput.urlLivro(),
-                livroDtoInput.sinopse(),
                 livroDtoInput.idioma(),
                 livroDtoInput.numeroDePagina(),
                 livroDtoInput.anoDePublicacao(),
@@ -72,7 +84,7 @@ public class LivroImplementacao implements LivroService {
     @Override
     public void deletarPorId(Long id) {
         Optional<Livro> livroOptional = livroRepository.findById(id);
-        if (livroOptional.isEmpty()){
+        if (livroOptional.isEmpty()) {
             throw new EntityNotFoundException("Livro não encontrado para o ID: " + id);
         }
         livroRepository.deleteById(id);

@@ -36,12 +36,20 @@ public class GeneroController {
         return new ResponseEntity<>(generoDtoOutput, HttpStatus.OK);
     }
 
+    /**
+     * Obtém do nosso banco de dados todos os gêneros disponiveis
+     * armazenados no nossa banco de dados;
+     * */
     @GetMapping
     public ResponseEntity<List<GeneroDtoOutput>> getAll(){
         var list = generoService.buscarTodos();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    /**
+     * Salva um determinado gênero no nosso banco de dados
+     * , e retorna como status CREATED;
+     * */
     @PostMapping
     public ResponseEntity<GeneroDtoOutput> salvarGenero(@RequestBody GeneroDtoInput generoDtoInput) {
         GeneroDtoOutput generoDtoOutput = generoService.cadastrar(generoDtoInput);
