@@ -15,5 +15,4 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     @Query("SELECT l FROM Livro l WHERE l.titulo = :titulo")
     Optional<Livro> findByTitulo(@Param("titulo") String titulo);
 
-
 }

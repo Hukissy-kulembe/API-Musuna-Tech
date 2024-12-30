@@ -38,7 +38,7 @@ public class Livro {
 
     private String sinopse;
 
-    @Column(unique = true ,nullable = false)
+    @Column(unique = true, nullable = false)
     private String capa;
 
     @Column(unique = true, nullable = false)
@@ -64,21 +64,23 @@ public class Livro {
     )
     private Set<Genero> generos = new HashSet<>();
 
-    public Livro(Editora editora, Set<Autor> autores, Set<Genero> generos, String capa, String s, String idioma, int i, LocalDate localDate, String isbn, String titulo) {
+    public Livro() {
         /* Construtor vazio */
     }
 
-    public Livro(Editora editora,
-                 Set<Autor> autores,
-                 Set<Genero> generos,
-                 String capa,
-                 String urlLivro,
-                 String sinopse,
-                 String idioma,
-                 int numeroDePagina,
-                 LocalDate anoDePublicacao,
-                 String isbn,
-                 String titulo) {
+    public Livro(
+            Editora editora,
+            Set<Autor> autores,
+            Set<Genero> generos,
+            String capa,
+            String urlLivro,
+            String sinopse,
+            String idioma,
+            int numeroDePagina,
+            LocalDate anoDePublicacao,
+            String isbn,
+            String titulo
+    ) {
         this.editora = editora;
         this.autores = autores;
         this.generos = generos;

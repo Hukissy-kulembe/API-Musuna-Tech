@@ -1,7 +1,9 @@
 package com.ao.musunatech.demoapp.services;
 
 import com.ao.musunatech.demoapp.dtos.input.LivroDtoInput;
+import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.dtos.output.LivroDtoOutput;
+import com.ao.musunatech.demoapp.models.Autor;
 
 import java.util.List;
 
@@ -20,5 +22,9 @@ public interface LivroService {
     List<LivroDtoOutput> buscarTodos();
 
     LivroDtoOutput atualizar(Long id, LivroDtoInput livroDtoInput);
+
+    List<AutorDtoOutput> listarAutores(String livro);
+
+    List<LivroDtoOutput> buscarLivrosPorAutor(String nome);
 
 }

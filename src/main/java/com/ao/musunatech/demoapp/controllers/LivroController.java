@@ -1,6 +1,7 @@
 package com.ao.musunatech.demoapp.controllers;
 
 import com.ao.musunatech.demoapp.dtos.input.LivroDtoInput;
+import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.dtos.output.LivroDtoOutput;
 import com.ao.musunatech.demoapp.services.LivroService;
 import org.springframework.http.HttpStatus;
@@ -25,23 +26,40 @@ public class LivroController {
         return new ResponseEntity<>(livroDtoOutput, HttpStatus.CREATED);
     }
 
-    /**
-     * Get: buscarPorId() -> busca registros pelo campo ID.
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<LivroDtoOutput> buscarPorId(@PathVariable Long id) {
-        var livroDtoOutput = livroService.buscarPorId(id);
-        return new ResponseEntity<>(livroDtoOutput, HttpStatus.OK);
-    }
-
-    /**
-     * Get: buscarPorTitulo(String titulo) -> está versão do Get nos permite buscar determintados
-     * livros identificando ele pelo seu titulo.
-     */
     @GetMapping("/titulo/{titulo}")
     public ResponseEntity<LivroDtoOutput> buscarPorTitulo(@PathVariable String titulo) {
-        var livroDtoOutput = livroService.buscarPorTitulo(titulo);
-        return new ResponseEntity<>(livroDtoOutput, HttpStatus.FOUND);
+        var livro = livroService.buscarPorTitulo(titulo);
+        return new ResponseEntity<>(livro, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LivroDtoOutput>> listarTodos() {
+        var livro = livroService.buscarTodos();
+        return new ResponseEntity<>(livro, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LivroDtoOutput> buscarPorId(@PathVariable Long id) {
+        var livro = livroService.buscarPorId(id);
+        return new ResponseEntity<>(livro, HttpStatus.OK);
+    }
+
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<LivroDtoOutput> buscarPorIsbn(@PathVariable String isbn) {
+        var livro = livroService.buscarPorIsbn(isbn);
+        return new ResponseEntity<>(livro, HttpStatus.OK);
+    }
+
+    @GetMapping("/autores/{livro}")
+    public ResponseEntity<List<AutorDtoOutput>> listarAutores(@PathVariable String livro) {
+        var autores = livroService.listarAutores(livro);
+        return new ResponseEntity<>(autores, HttpStatus.OK);
+    }
+
+    @GetMapping("/livros/{autor}")
+    public ResponseEntity<List<LivroDtoOutput>> buscarLivrosPorAutor(@PathVariable String autor) {
+        var livros = livroService.buscarLivrosPorAutor(autor);
+        return new ResponseEntity<>(livros, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -50,30 +68,10 @@ public class LivroController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    /**
-     * Get: buscarPorIsbn() -> o parâmetro lhe permite buscar um determinado
-     * livro registrado no banco de dados a partir do campo "ISBN".
-     */
-    @GetMapping("/isbn/{isbn}")
-    public ResponseEntity<LivroDtoOutput> buscarPorIsbn(@PathVariable String isbn) {
-        var livroDtoOutput = livroService.buscarPorIsbn(isbn);
-        return new ResponseEntity<>(livroDtoOutput, HttpStatus.OK);
-    }
-
-    /**
-     * Get: buscarTodos() -> responsavel por pegar todos os registros
-     * dentro da Tabela Livros registrados.
-     */
-    @GetMapping
-    public ResponseEntity<List<LivroDtoOutput>> buscarTodos() {
-        var list = livroService.buscarTodos();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @PutMapping
-    public ResponseEntity<LivroDtoOutput> atualizar(@PathVariable Long id, @RequestBody LivroDtoInput livroDtoInput){
-        var livroDtoOutput = livroService.atualizar(id, livroDtoInput);
-        return new ResponseEntity<>(livroDtoOutput, HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<LivroDtoOutput> atualizarLivro(@PathVariable Long id, @RequestBody LivroDtoInput livro) {
+        var livros = livroService.atualizar(id, livro);
+        return new ResponseEntity<>(livros, HttpStatus.OK);
     }
 
 }

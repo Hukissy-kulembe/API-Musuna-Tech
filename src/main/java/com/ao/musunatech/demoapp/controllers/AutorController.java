@@ -5,10 +5,9 @@ import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.services.AutorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/autor")
@@ -24,6 +23,30 @@ public class AutorController {
     public ResponseEntity<AutorDtoOutput> cadastrar(@RequestBody AutorDtoInput autorDtoInput){
          var autorDtoOutput = autorService.cadastrar(autorDtoInput);
          return new ResponseEntity<>(autorDtoOutput, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AutorDtoOutput> buscarPorId(@PathVariable Long id){
+        var autorDtoOutput = autorService.buscarPorId(id);
+        return new ResponseEntity<>(autorDtoOutput, HttpStatus.OK);
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<AutorDtoOutput> buscarPorNome(@PathVariable String nome){
+        var autorDtoOutput = autorService.buscarPorNome(nome);
+        return new ResponseEntity<>(autorDtoOutput, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AutorDtoOutput>> buscarTodos(){
+        var autorDtoOutput = autorService.listarTodos();
+        return new ResponseEntity<>(autorDtoOutput, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id){
+        autorService.deletarPorId(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

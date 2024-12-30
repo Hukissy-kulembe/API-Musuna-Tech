@@ -24,12 +24,10 @@ public class LivroImplementacao implements LivroService {
 
     private LivroRepository livroRepository;
     private AutorRepository autorRepository;
-    private GeneroRepository generoRepository;
 
     public LivroImplementacao(LivroRepository livroRepository, AutorRepository autorRepository, GeneroRepository generoRepository) {
         this.livroRepository = livroRepository;
         this.autorRepository = autorRepository;
-        this.generoRepository = generoRepository;
     }
 
     @Override
@@ -40,6 +38,7 @@ public class LivroImplementacao implements LivroService {
                 livroDtoInput.generos(),
                 livroDtoInput.capa(),
                 livroDtoInput.urlLivro(),
+                livroDtoInput.sinopse(),
                 livroDtoInput.idioma(),
                 livroDtoInput.numeroDePagina(),
                 livroDtoInput.anoDePublicacao(),
@@ -109,7 +108,8 @@ public class LivroImplementacao implements LivroService {
     @Override
     public LivroDtoOutput buscarPorTitulo(String titulo) {
         Livro livro = livroRepository.findByTitulo(titulo)
-                .orElseThrow(() -> new EntityNotFoundException("Livro não encontrado para o titulo: " + titulo));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Livro não encontrado para o titulo: " + titulo));
         return new LivroDtoOutput(
                 livro.getId(),
                 livro.getTitulo(),
@@ -169,6 +169,43 @@ public class LivroImplementacao implements LivroService {
                 l.getSinopse(),
                 l.getCapa()
         );
+    }
+
+    @Override
+    public List<AutorDtoOutput> listarAutores(String livro) {
+        Livro livros = livroRepository.findByTitulo(livro)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Livro não encontrado para o titulo: " + livro)
+                );
+
+        return livros.getAutores()
+                .stream()
+                .map(value -> new AutorDtoOutput(
+                        value.getId(),
+                        value.getAutorNome(),
+                        value.getBiografia(),
+                        value.getDataDeNascimento(),
+                        value.getNacionalidade()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LivroDtoOutput> buscarLivrosPorAutor(String nome) {
+        var autor = autorRepository.findByAutorNome(nome)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Nenhum livro associado ao autor: " + nome));
+
+        return autor.getLivros().stream().map(value ->
+                        new LivroDtoOutput(
+                                value.getId(),
+                                value.getTitulo(),
+                                value.getAnoDePublicacao(),
+                                value.getIsbn(),
+                                value.getNumeroDePagina(),
+                                value.getIdioma(), value.getSinopse(),
+                                value.getIsbn()))
+                .collect(Collectors
+                        .toList());
     }
 
 }

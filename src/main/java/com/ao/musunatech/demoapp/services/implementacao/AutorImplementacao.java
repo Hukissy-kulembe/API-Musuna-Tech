@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AutorImplementacao implements AutorService {
@@ -27,14 +28,13 @@ public class AutorImplementacao implements AutorService {
 
         var a = autorRepository.save(autor);
 
-        AutorDtoOutput autorDtoOutput = new AutorDtoOutput(
+        return new AutorDtoOutput(
                 a.getId(),
                 a.getBiografia(),
                 a.getAutorNome(),
                 a.getDataDeNascimento(),
                 a.getNacionalidade()
         );
-        return autorDtoOutput;
     }
 
     @Override
@@ -43,33 +43,73 @@ public class AutorImplementacao implements AutorService {
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Autor não encontrado para o id: " + id));
 
-        AutorDtoOutput autorDtoOutput = new AutorDtoOutput(
+        return new AutorDtoOutput(
                 autor.getId(),
                 autor.getBiografia(),
                 autor.getAutorNome(),
                 autor.getDataDeNascimento(),
                 autor.getNacionalidade()
         );
-        return autorDtoOutput;
     }
 
     @Override
     public void deletarPorId(Long id) {
+        autorRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Autor não encontrado para o ID: " + id));
         autorRepository.deleteById(id);
     }
 
     @Override
     public List<AutorDtoOutput> listarTodos() {
-        return List.of();
+        List<Autor> autors = autorRepository.findAll();
+
+        if (autors.isEmpty()) {
+            throw new EntityNotFoundException("Está vazia");
+        }
+
+        return autors.stream()
+                .map(value -> new AutorDtoOutput(
+                        value.getId(),
+                        value.getBiografia(),
+                        value.getAutorNome(),
+                        value.getDataDeNascimento(),
+                        value.getNacionalidade()
+                )).collect(Collectors
+                        .toList());
     }
 
     @Override
     public AutorDtoOutput buscarPorNome(String nome) {
-        return null;
+        var autor = autorRepository.findByAutorNome(nome)
+                .orElseThrow(() -> new
+                        EntityNotFoundException("Autor não encontrado para o nome: " + nome));
+        return new AutorDtoOutput(
+                autor.getId(),
+                autor.getBiografia(),
+                autor.getAutorNome(),
+                autor.getDataDeNascimento(),
+                autor.getNacionalidade()
+        );
     }
 
     @Override
     public AutorDtoOutput atualizar(Long id, AutorDtoInput autorDtoInput) {
-        return null;
+        Autor autor = autorRepository
+                .findById(id)
+                .map(value -> new Autor(autorDtoInput.nome(),
+                        autorDtoInput.biografia(),
+                        autorDtoInput.dataDeNascimento(),
+                        autorDtoInput.nacionalidade()))
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Autor não encontrado para o ID: " + id));
+        var a = autorRepository.save(autor);
+        return new AutorDtoOutput(
+                a.getId(),
+                a.getBiografia(),
+                a.getAutorNome(),
+                a.getDataDeNascimento(),
+                a.getNacionalidade()
+        );
     }
 }
