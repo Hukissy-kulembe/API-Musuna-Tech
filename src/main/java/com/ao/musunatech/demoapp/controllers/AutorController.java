@@ -2,6 +2,7 @@ package com.ao.musunatech.demoapp.controllers;
 
 import com.ao.musunatech.demoapp.dtos.input.AutorDtoInput;
 import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
+import com.ao.musunatech.demoapp.dtos.output.LivroDtoOutput;
 import com.ao.musunatech.demoapp.services.AutorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,18 @@ public class AutorController {
     public ResponseEntity<List<AutorDtoOutput>> buscarTodos(){
         var autorDtoOutput = autorService.listarTodos();
         return new ResponseEntity<>(autorDtoOutput, HttpStatus.OK);
+    }
+
+    @GetMapping("/livros/{autor}")
+    public ResponseEntity<List<LivroDtoOutput>> buscarLivrosDeUmAutores(@PathVariable String autor) {
+        var livros = autorService.buscarLivrosDeUmAutor(autor);
+        return new ResponseEntity<>(livros, HttpStatus.OK);
+    }
+
+    @GetMapping("/autores/{autor}")
+    public ResponseEntity<List<LivroDtoOutput>> buscarLivrosDeUmAutor(String autor) {
+        var livros = autorService.buscarLivrosDeUmAutor(autor);
+        return new ResponseEntity<>(livros, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

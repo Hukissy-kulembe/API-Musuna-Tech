@@ -27,4 +27,6 @@ public interface LivroService {
 
     List<LivroDtoOutput> buscarLivrosPorAutor(String nome);
 
+    List<LivroDtoOutput> buscarLivrosPorGenero(String genero);
+
 }

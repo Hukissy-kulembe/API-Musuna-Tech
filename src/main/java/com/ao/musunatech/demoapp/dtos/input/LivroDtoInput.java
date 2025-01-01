@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public record LivroDtoInput(
-        Editora editora,
-        Set<Autor> autores,
-        Set<Genero> generos,
+        Long editora,
+        Set<Long> autores,
+        Set<Long> generos,
         String titulo,
         String isbn,
         LocalDate anoDePublicacao,

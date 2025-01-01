@@ -62,6 +62,12 @@ public class LivroController {
         return new ResponseEntity<>(livros, HttpStatus.OK);
     }
 
+    @GetMapping("genero/{genero}")
+    public ResponseEntity<List<LivroDtoOutput>> buscarLivrosPorGenero(@PathVariable String genero) {
+        var livros = livroService.buscarLivrosPorGenero(genero);
+        return new ResponseEntity<>(livros, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
         livroService.deletarPorId(id);
