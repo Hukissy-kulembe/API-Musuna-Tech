@@ -91,7 +91,7 @@ public class GeneroController {
      * @param genero
      * @return
      */
-    @GetMapping
+    @GetMapping("/livro/{genero}")
     public ResponseEntity<List<LivroDtoOutput>> buscarLivrosDeUmGenero(@PathVariable String genero) {
         var livros = generoService.buscarLivrosDeUmGenero(genero);
         return new ResponseEntity<>(livros, HttpStatus.OK);

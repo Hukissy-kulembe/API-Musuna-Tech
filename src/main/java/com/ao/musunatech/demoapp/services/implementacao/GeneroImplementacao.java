@@ -147,9 +147,12 @@ public class GeneroImplementacao implements GeneroService {
         generoRepository.deleteById(id);
     }
 
-    /**
-     * Buscar Livros de um Gênero: Listar todos os livros associados a um gênero específico.
+    /**Buscar Livros de um Gênero: Listar todos os livros associados a um gênero específico.
+     *
+     * @param genero
+     * @return
      */
+
     public List<LivroDtoOutput> buscarLivrosDeUmGenero(String genero) {
         return generoRepository.findByName(genero)
                 .get().getLivros()

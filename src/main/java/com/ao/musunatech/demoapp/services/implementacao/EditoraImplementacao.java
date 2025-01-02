@@ -16,8 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class EditoraImplementacao implements EditoraService {
 
-    @Autowired
     private EditoraRepository editoraRepository;
+
+    public EditoraImplementacao (EditoraRepository editoraRepository) {
+        this.editoraRepository = editoraRepository;
+    }
 
     /**Cadastrar Editora: Adicionar uma nova editora ao sistema com dados como nome, endereço, contato e ano de fundação.
      *
