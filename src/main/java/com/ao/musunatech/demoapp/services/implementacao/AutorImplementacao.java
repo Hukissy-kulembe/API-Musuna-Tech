@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.autores;
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.generos;
+
 @Service
 public class AutorImplementacao implements AutorService {
 
@@ -170,6 +173,8 @@ public class AutorImplementacao implements AutorService {
                 .map(value -> new LivroDtoOutput(
                         value.getId(),
                         value.getTitulo(),
+                        autores(value.getAutores()),
+                        generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
                         value.getNumeroDePagina(),

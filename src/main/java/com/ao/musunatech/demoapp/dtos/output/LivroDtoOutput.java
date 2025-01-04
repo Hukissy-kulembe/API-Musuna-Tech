@@ -10,6 +10,8 @@ import java.util.Set;
 public record LivroDtoOutput(
         Long id,
         String titulo,
+        Set<String> autores,
+        Set<String> generos,
         LocalDate anoDePublicacao,
         String isbn,
         int numeroDePagina,

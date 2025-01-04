@@ -19,7 +19,7 @@ public interface LivroService {
 
     LivroDtoOutput buscarPorTitulo(String titulo);
 
-    List<LivroDtoOutput> buscarTodos();
+    List<LivroDtoOutput> buscarTodos(String titulo, String autor);
 
     LivroDtoOutput atualizar(Long id, LivroDtoInput livroDtoInput);
 

@@ -7,11 +7,13 @@ import com.ao.musunatech.demoapp.models.Editora;
 import com.ao.musunatech.demoapp.repositories.EditoraRepository;
 import com.ao.musunatech.demoapp.services.EditoraService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.autores;
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.generos;
 
 @Service
 public class EditoraImplementacao implements EditoraService {
@@ -150,6 +152,8 @@ public class EditoraImplementacao implements EditoraService {
                 .stream().map(value -> new LivroDtoOutput(
                         value.getId(),
                         value.getTitulo(),
+                        autores(value.getAutores()),
+                        generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
                         value.getNumeroDePagina(),

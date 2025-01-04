@@ -8,13 +8,14 @@ import com.ao.musunatech.demoapp.repositories.GeneroRepository;
 import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import com.ao.musunatech.demoapp.services.GeneroService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.autores;
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.generos;
 
 @Service
 public class GeneroImplementacao implements GeneroService {
@@ -159,6 +160,8 @@ public class GeneroImplementacao implements GeneroService {
                 .stream().map(value -> new LivroDtoOutput(
                         value.getId(),
                         value.getTitulo(),
+                        autores(value.getAutores()),
+                        generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
                         value.getNumeroDePagina(),

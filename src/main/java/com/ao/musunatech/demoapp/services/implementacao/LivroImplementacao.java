@@ -12,15 +12,18 @@ import com.ao.musunatech.demoapp.repositories.EditoraRepository;
 import com.ao.musunatech.demoapp.repositories.GeneroRepository;
 import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import com.ao.musunatech.demoapp.services.LivroService;
+import com.ao.musunatech.demoapp.services.specifications.LivroSpecification;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.ao.musunatech.demoapp.services.specifications.LivroSpecification.autorLivroEquals;
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.autores;
+import static com.ao.musunatech.demoapp.services.uteis.Uteis.generos;
 
 @Service
 public class LivroImplementacao implements LivroService {
@@ -87,6 +90,8 @@ public class LivroImplementacao implements LivroService {
         LivroDtoOutput livroDtoOutput = new LivroDtoOutput(
                 a.getId(),
                 a.getTitulo(),
+                autores(a.getAutores()),
+                generos(a.getGeneros()),
                 a.getAnoDePublicacao(),
                 a.getIsbn(),
                 a.getNumeroDePagina(),
@@ -111,6 +116,8 @@ public class LivroImplementacao implements LivroService {
         return new LivroDtoOutput(
                 livro.getId(),
                 livro.getTitulo(),
+                autores(livro.getAutores()),
+                generos(livro.getGeneros()),
                 livro.getAnoDePublicacao(),
                 livro.getIsbn(),
                 livro.getNumeroDePagina(),
@@ -145,6 +152,8 @@ public class LivroImplementacao implements LivroService {
         return new LivroDtoOutput(
                 livro.getId(),
                 livro.getTitulo(),
+                autores(livro.getAutores()),
+                generos(livro.getGeneros()),
                 livro.getAnoDePublicacao(),
                 livro.getIsbn(),
                 livro.getNumeroDePagina(),
@@ -166,6 +175,8 @@ public class LivroImplementacao implements LivroService {
         return new LivroDtoOutput(
                 livro.getId(),
                 livro.getTitulo(),
+                autores(livro.getAutores()),
+                generos(livro.getGeneros()),
                 livro.getAnoDePublicacao(),
                 livro.getIsbn(),
                 livro.getNumeroDePagina(),
@@ -180,12 +191,14 @@ public class LivroImplementacao implements LivroService {
      * @return
      */
     @Override
-    public List<LivroDtoOutput> buscarTodos() {
-        return livroRepository.findAll()
+    public List<LivroDtoOutput> buscarTodos(String titulo, String autor) {
+        return livroRepository.findAll(LivroSpecification.livroDtoOutputSpecification(titulo).and(autorLivroEquals(autor)))
                 .stream()
                 .map(value -> new LivroDtoOutput(
                         value.getId(),
                         value.getTitulo(),
+                        autores(value.getAutores()),
+                        generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
                         value.getNumeroDePagina(),
@@ -245,6 +258,8 @@ public class LivroImplementacao implements LivroService {
         return new LivroDtoOutput(
                 l.getId(),
                 l.getTitulo(),
+                autores(l.getAutores()),
+                generos(l.getGeneros()),
                 l.getAnoDePublicacao(),
                 l.getIsbn(),
                 l.getNumeroDePagina(),
@@ -292,6 +307,8 @@ public class LivroImplementacao implements LivroService {
                         new LivroDtoOutput(
                                 value.getId(),
                                 value.getTitulo(),
+                                autores(value.getAutores()),
+                                generos(value.getGeneros()),
                                 value.getAnoDePublicacao(),
                                 value.getIsbn(),
                                 value.getNumeroDePagina(),
@@ -316,6 +333,8 @@ public class LivroImplementacao implements LivroService {
                 new LivroDtoOutput(
                         value.getId(),
                         value.getTitulo(),
+                        autores(value.getAutores()),
+                        generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
                         value.getNumeroDePagina(),

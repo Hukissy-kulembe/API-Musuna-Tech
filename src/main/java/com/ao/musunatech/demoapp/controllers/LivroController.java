@@ -4,6 +4,7 @@ import com.ao.musunatech.demoapp.dtos.input.LivroDtoInput;
 import com.ao.musunatech.demoapp.dtos.output.AutorDtoOutput;
 import com.ao.musunatech.demoapp.dtos.output.LivroDtoOutput;
 import com.ao.musunatech.demoapp.services.LivroService;
+import com.ao.musunatech.demoapp.services.specifications.LivroSpecification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +48,8 @@ public class LivroController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<List<LivroDtoOutput>> listarTodos() {
-        var livro = livroService.buscarTodos();
+    public ResponseEntity<List<LivroDtoOutput>> listarTodos(@RequestParam(required = false) String titulo, @RequestParam(required = false) String autor) {
+        var livro = livroService.buscarTodos(titulo, autor);
         return new ResponseEntity<>(livro, HttpStatus.OK);
     }
 
