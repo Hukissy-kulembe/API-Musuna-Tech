@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ao.musunatech.demoapp.services.specifications.LivroSpecification.autorLivroEquals;
+import static com.ao.musunatech.demoapp.services.specifications.LivroSpecification.*;
 import static com.ao.musunatech.demoapp.services.uteis.Uteis.autores;
 import static com.ao.musunatech.demoapp.services.uteis.Uteis.generos;
 
@@ -43,7 +43,8 @@ public class LivroImplementacao implements LivroService {
         this.editoraRepository = editoraRepository;
     }
 
-    /**Cadastrar Livro: Permitir a criação de um novo livro com atributos como título,autor(es), gênero(s), editora, ano de publicação, ISBN e demais atributos.
+    /**
+     * Cadastrar Livro: Permitir a criação de um novo livro com atributos como título,autor(es), gênero(s), editora, ano de publicação, ISBN e demais atributos.
      *
      * @param livroDtoInput
      * @return
@@ -103,7 +104,8 @@ public class LivroImplementacao implements LivroService {
         return livroDtoOutput;
     }
 
-    /**Buscar Livro por ID: Recuperar os detalhes de um livro com base no seu identificador único.
+    /**
+     * Buscar Livro por ID: Recuperar os detalhes de um livro com base no seu identificador único.
      *
      * @param id
      */
@@ -129,7 +131,8 @@ public class LivroImplementacao implements LivroService {
         );
     }
 
-    /**Deletar Livro: Remover um livro do sistema.
+    /**
+     * Deletar Livro: Remover um livro do sistema.
      *
      * @param id
      */
@@ -142,7 +145,8 @@ public class LivroImplementacao implements LivroService {
         livroRepository.deleteById(id);
     }
 
-    /**Buscar Livro por ISBN: Recuperar os detalhes de um livro com base no seu isbn.
+    /**
+     * Buscar Livro por ISBN: Recuperar os detalhes de um livro com base no seu isbn.
      *
      * @param isbn
      * @return
@@ -166,7 +170,9 @@ public class LivroImplementacao implements LivroService {
         );
     }
 
-    /**Buscar Livro por Título: Permitir buscar livros com base no título.
+    /**
+     * Buscar Livro por Título: Permitir buscar livros com base no título.
+     *
      * @param titulo
      * @return LivroDtoOutput
      */
@@ -190,13 +196,18 @@ public class LivroImplementacao implements LivroService {
         );
     }
 
-    /**Listar Livros: Retornar uma lista de todos os livros cadastrados.
+    /**
+     * Listar Livros: Retornar uma lista de todos os livros cadastrados.
      *
      * @return
      */
     @Override
-    public List<LivroDtoOutput> buscarTodos(String titulo, String autor) {
-        return livroRepository.findAll(LivroSpecification.livroDtoOutputSpecification(titulo).and(autorLivroEquals(autor)))
+    public List<LivroDtoOutput> buscarTodos(String titulo, String autor, String genero, String editora) {
+        return livroRepository.findAll(LivroSpecification
+                        .livroDtoOutputSpecification(titulo)
+                        .and(autorLivroEquals(autor)
+                                .and(generoLivroEquals(genero)
+                                        .and(editoraLivroEquals(editora)))))
                 .stream()
                 .map(value -> new LivroDtoOutput(
                         value.getId(),
@@ -214,7 +225,8 @@ public class LivroImplementacao implements LivroService {
                 .collect(Collectors.toList());
     }
 
-    /**Atualizar Livro: Editar as informações de um livro existente.
+    /**
+     * Atualizar Livro: Editar as informações de um livro existente.
      *
      * @param id
      * @param livroDtoInput
@@ -275,7 +287,8 @@ public class LivroImplementacao implements LivroService {
         );
     }
 
-    /**Listar todos os autores registrados;
+    /**
+     * Listar todos os autores registrados;
      *
      * @param livro
      * @return
@@ -298,7 +311,8 @@ public class LivroImplementacao implements LivroService {
                 .collect(Collectors.toList());
     }
 
-    /**Buscar Livros por Autor: Listar todos os livros associados a um determinado autor.
+    /**
+     * Buscar Livros por Autor: Listar todos os livros associados a um determinado autor.
      *
      * @param nome
      * @return
@@ -325,7 +339,8 @@ public class LivroImplementacao implements LivroService {
                         .toList());
     }
 
-    /**Buscar Livros por Gênero: Listar livros que pertençam a um ou mais gêneros específicos.
+    /**
+     * Buscar Livros por Gênero: Listar livros que pertençam a um ou mais gêneros específicos.
      *
      * @param genero
      * @return
@@ -337,17 +352,17 @@ public class LivroImplementacao implements LivroService {
                 .orElseThrow(() -> new EntityNotFoundException("Nenhum livro associado ao autor: " + genero));
 
         return generos.getLivros().stream().map(value ->
-                new LivroDtoOutput(
-                        value.getId(),
-                        value.getTitulo(),
-                        autores(value.getAutores()),
-                        value.getEditora().getEditoraNome(),
-                        generos(value.getGeneros()),
-                        value.getAnoDePublicacao(),
-                        value.getIsbn(),
-                        value.getNumeroDePagina(),
-                        value.getIdioma(), value.getSinopse(),
-                        value.getIsbn()))
+                        new LivroDtoOutput(
+                                value.getId(),
+                                value.getTitulo(),
+                                autores(value.getAutores()),
+                                value.getEditora().getEditoraNome(),
+                                generos(value.getGeneros()),
+                                value.getAnoDePublicacao(),
+                                value.getIsbn(),
+                                value.getNumeroDePagina(),
+                                value.getIdioma(), value.getSinopse(),
+                                value.getIsbn()))
                 .collect(Collectors
                         .toList());
     }

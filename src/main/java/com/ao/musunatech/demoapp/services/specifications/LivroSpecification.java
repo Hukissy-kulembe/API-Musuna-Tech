@@ -5,10 +5,6 @@ import com.ao.musunatech.demoapp.repositories.LivroRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;
 
-import java.util.stream.Collectors;
-
-import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
-
 public class LivroSpecification {
 
     private static final LivroRepository livroRepository = null;
@@ -24,24 +20,33 @@ public class LivroSpecification {
     }
 
     public static Specification<Livro> autorLivroEquals(String autor) {
-
-        /*var autors = livroRepository
-               .findAll()
-               .stream()
-               .map(value -> value.getAutores()
-                       .stream()
-                       .filter(name -> name.getAutorNome()
-                               .equals(autor))).collect(Collectors.toSet());
-
-         */
-
        return (root, query, builder) -> {
            if (ObjectUtils.isEmpty(autor))
                return null;
 
-           return builder.like(root.get("editora"), "%"+ autor+"%");
+           return builder
+                   .like(root.join("autores")
+                           .get("autorNome"), "%"+ autor+"%");
        };
 
+    }
+
+    public static Specification<Livro> generoLivroEquals(String genero) {
+        return (root, query, builder) -> {
+          if (ObjectUtils.isEmpty(genero)) return null;
+          return builder
+                  .like(root.join("generos")
+                          .get("generoNome"), "%"+genero+"%");
+        };
+    }
+
+    public static Specification<Livro> editoraLivroEquals(String editora) {
+        return (root, query, builder) -> {
+          if (ObjectUtils.isEmpty(editora))
+              return null;
+          return builder.like(root.join("editora")
+                  .get("editoraNome"), "%"+editora+"%");
+        };
     }
 
 }

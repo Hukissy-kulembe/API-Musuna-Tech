@@ -48,8 +48,11 @@ public class LivroController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<List<LivroDtoOutput>> listarTodos(@RequestParam(required = false) String titulo, @RequestParam(required = false) String autor) {
-        var livro = livroService.buscarTodos(titulo, autor);
+    public ResponseEntity<List<LivroDtoOutput>> listarTodos(@RequestParam(required = false) String titulo,
+                                                            @RequestParam(required = false) String autor,
+                                                            @RequestParam(required = false) String genero,
+                                                            @RequestParam(required = false) String editora) {
+        var livro = livroService.buscarTodos(titulo, autor, genero, editora);
         return new ResponseEntity<>(livro, HttpStatus.OK);
     }
 
