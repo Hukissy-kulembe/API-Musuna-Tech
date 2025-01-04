@@ -11,6 +11,7 @@ public record LivroDtoOutput(
         Long id,
         String titulo,
         Set<String> autores,
+        String editora,
         Set<String> generos,
         LocalDate anoDePublicacao,
         String isbn,

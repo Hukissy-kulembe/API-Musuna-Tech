@@ -174,6 +174,7 @@ public class AutorImplementacao implements AutorService {
                         value.getId(),
                         value.getTitulo(),
                         autores(value.getAutores()),
+                        value.getEditora().getEditoraNome(),
                         generos(value.getGeneros()),
                         value.getAnoDePublicacao(),
                         value.getIsbn(),
